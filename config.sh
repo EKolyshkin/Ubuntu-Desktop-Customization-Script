@@ -3,8 +3,8 @@
 ## This script is meant to install everything I need for a comfortable daily driver experience on Ubuntu.
 
 ## Set Custom Aliases
-# cp ./bash-config ~/.bash_aliases && echo "Bash aliases set..." || echo "Bash aliases not found!"
-# source /etc/bash.bashrc
+cp ./bash-config ~/.bash_aliases && echo "Bash aliases set..." || echo "Bash aliases not found!"
+source /etc/bash.bashrc
 
 
 ## APT Repositories
@@ -28,10 +28,10 @@ cat apps-list | xargs sudo apt install -qqy
 
 
 # Proton Bridge, Pop Shell, Extension Installer
-# wget -cq https://protonmail.com/download/bridge/protonmail-bridge_1.8.7-1_amd64.deb -O protonbridge.deb
+wget -cq https://protonmail.com/download/bridge/protonmail-bridge_1.8.7-1_amd64.deb -O protonbridge.deb
 git clone https://github.com/pop-os/shell && sudo apt install make node-typescript -qqy > /dev/null
 
-# sudo dpkg -i protonbridge.deb > /dev/null && rm protonbridge.deb
+sudo dpkg -i protonbridge.deb > /dev/null && rm protonbridge.deb
 make -C shell/ local-install > /dev/null && rm -rf shell/ 
 
 wget -qO gnome-shell-extension-installer "https://github.com/brunelli/gnome-shell-extension-installer/raw/master/gnome-shell-extension-installer" > /dev/null
@@ -39,36 +39,32 @@ chmod +x gnome-shell-extension-installer
 sudo mv gnome-shell-extension-installer /usr/bin/
 
 # Joplin Desktop
-# wget -O - https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh | bash
+wget -O - https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh | bash
 
 # AppImageLauncher
-# wget -cq https://cdn.filen.io/sync/updates/filen-setup.AppImage
-# ail-cli integrate ./filen-setup.AppImage
+wget -cq https://cdn.filen.io/sync/updates/filen-setup.AppImage
+ail-cli integrate ./filen-setup.AppImage
 
-# curl -s https://api.github.com/repos/probonopd/Zoom.AppImage/releases \ # Zoom Desktop
-#	| grep "browser_download_url.*AppImage" \
-#	| cut -d : -f 2,3 \
-#	| tr -d \" \
-#	| wget -qi - -O Zoom.AppImage
-# ail-cli integrate ./Zoom.AppImage
-
-
-
+curl -s https://api.github.com/repos/probonopd/Zoom.AppImage/releases \ # Zoom Desktop
+| grep "browser_download_url.*AppImage" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi - -O Zoom.AppImage
+ail-cli integrate ./Zoom.AppImage
 
 
 ## Remove Preinstalled Apps
 echo "Apps installed..."
 
-# sudo apt remove gedit gnome-shell-extension-ubuntu-dock gnome-shell-extension-desktop-icons* -shell-extension-desktop-icons-ng --purge -qq
-# sudo snap remove snap-store > /dev/null	# Removes Ubuntu Software
-# sudo rm -rf /var/cache/snapd
-# sudo apt purge snapd -qqy
-# rm -rf ~/snap
+sudo apt remove gedit gnome-shell-extension-ubuntu-dock gnome-shell-extension-desktop-icons* -shell-extension-desktop-icons-ng --purge -qq
+sudo snap remove snap-store > /dev/null	# Removes Ubuntu Software
+sudo rm -rf /var/cache/snapd
+sudo apt purge snapd -qqy
+rm -rf ~/snap
 
 
 ## GNOME Extensions
 gnome-shell-extension-installer 19 906 1401 3193 # User Themes, Sound Input Output Device Chooser, Bluetooth Quick Connect, Blur My Shell
-
 
 gnome-extensions enable -q pop-shell@system76.com
 gnome-extensions enable -q bluetooth-quick-connect@bjarosze.gmail.com
@@ -81,11 +77,11 @@ echo "Extensions installed..."
 
 ## Miscellaneous GNOME Settings
 gsettings set org.gnome.desktop.interface enable-hot-corners false		# Disables Hot Corner
-# gsettings set org.gnome.desktop.notifications show-in-lock-screen false		# Disables lock screen notifications
+gsettings set org.gnome.desktop.notifications show-in-lock-screen false		# Disables lock screen notifications
 gsettings set org.gnome.desktop.interface clock-format '12h'			# Change clock to AM/PM
 favorites=$(cat './favorites-config')
 gsettings set org.gnome.shell favorite-apps "$favorites"			# Sets app favorites
-# gsettings set org.gnome.desktop.wm.preferences button-layout 'close,minimize:'	# Moves titlebar buttons left
+gsettings set org.gnome.desktop.wm.preferences button-layout 'close,minimize:'	# Moves titlebar buttons left
 
 touch ~/Templates/New\ Document.txt						# Makes blank document template for file manager
 nmcli radio wifi off && sudo macchanger -r wlp2s0 && nmcli radio wifi on        # Randomizes MAC address
@@ -140,9 +136,9 @@ sudo ./WhiteSur-gtk-theme-master/tweaks.sh -g -i simple -c dark -b blank > /dev/
 
 
 ## WhiteSur Firefox & Snap Theme
-# firefox &
-# sleep 5 && killall -q firefox	# Initialize and quit Firefox before applying theme
-# ./WhiteSur-gtk-theme-master/tweaks.sh -f monterey > /dev/null && echo "Firefox theme set..." || echo "Firefox theme failed to install!"
+firefox &
+sleep 5 && killall -q firefox	# Initialize and quit Firefox before applying theme
+./WhiteSur-gtk-theme-master/tweaks.sh -f monterey > /dev/null && echo "Firefox theme set..." || echo "Firefox theme failed to install!"
 ./WhiteSur-gtk-theme-master/tweaks.sh -s > /dev/null && echo "Snap theme set..." || echo "Snap theme failed to install!"
 
 
