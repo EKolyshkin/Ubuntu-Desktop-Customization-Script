@@ -177,6 +177,9 @@ gsettings set org.gnome.desktop.interface gtk-theme 'WhiteSur-dark' && echo "App
 rm -rf WhiteSur-gtk-theme-master/ WhiteSur-gtk-theme-master.zip 
 
 
+## Set Up Workspace Names and Settings
+./script-tiling-key-config.sh
+
 ## For Apple keyboards and Keychron
 sudo touch /etc/modprobe.d/hid_apple.conf
 sudo tee /etc/modprobe.d/hid_apple.conf <<< "options hid_apple fnmode=2 swap_opt_cmd=1" > /dev/null
